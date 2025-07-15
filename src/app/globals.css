@@ -5,6 +5,20 @@
   --foreground: #171717;
 }
 
+.nav-link {
+  color: #ECF0F1;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: block;
+  transition: background 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #0C1F3C;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
