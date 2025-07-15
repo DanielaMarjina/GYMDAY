@@ -49,6 +49,7 @@ export default function CalendarPage() {
                 </nav>
             </aside>
 
+            {/* CONTINUT */}
 
             <div className="p-6 flex-1 h-full bg-[#f4f4f4] flex justify-center items-start overflow-x-auto">
                 <div className="calendar-container">

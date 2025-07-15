@@ -1,7 +1,8 @@
 import {
-    Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn
+    Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn,OneToMany
 } from "typeorm";
 import { User } from "./User";
+import { Workout } from "./Workout";
 
 @Entity("workout_plans")
 export class WorkoutPlan {
@@ -20,4 +21,8 @@ export class WorkoutPlan {
 
     @Column("text", { nullable: true })
     description: string;
+
+    @OneToMany(() => Workout, (workout) => workout.plan)
+    workouts: Workout[];
+
 }
