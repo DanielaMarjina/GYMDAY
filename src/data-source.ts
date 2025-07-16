@@ -1,21 +1,27 @@
-import "reflect-metadata";
 import { DataSource } from "typeorm";
-// import { User } from "./entity/User";
-// import { WorkoutPlan } from "./entity/WorkoutPlan";
+import "mysql2";
+import { User } from "./entities/User";
+import { WorkoutPlan } from "./entities/WorkoutPlan";
+import { Workout } from "./entities/Workout";
+import { Exercise } from "./entities/Exercise";
+import { WorkoutExercise } from "./entities/WorkoutExercise";
 
-
-const AppDataSource = new DataSource({
+export const AppDataSource = new DataSource({
   type: "mysql",
   host: "localhost",
   port: 3306,
-  username: "root",
+  username: "practica",
   password: "admin1234",
   database: "gymday",
   synchronize: false,
-  logging: true,
-  //entities: [User, WorkoutPlan],
-  migrations: ["src/migrations/**/*.ts"],
-  subscribers: [],
+  logging: false,
+  entities: [User, WorkoutPlan, Workout, Exercise, WorkoutExercise],
+  migrations: ["src/migrations/*.js"],
 });
 
-export default AppDataSource;
+export async function initializeDataSource() {
+  if (!AppDataSource.isInitialized) {
+    await AppDataSource.initialize();
+  }
+  return AppDataSource;
+}

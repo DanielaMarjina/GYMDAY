@@ -1,28 +1,32 @@
 import {
-    Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn,OneToMany
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
 } from "typeorm";
-import { User } from "./User";
-import { Workout } from "./Workout";
+import { User } from "./User";  // aici poți lăsa import normal dacă nu e ciclu altundeva
+import type { Workout } from "./Workout";
 
 @Entity("workout_plans")
 export class WorkoutPlan {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ name: "user_id" })
-    userId: number;
+  @Column({ name: "user_id" })
+  userId: number;
 
-    @ManyToOne(() => User, (user) => user.workoutPlans, { onDelete: "CASCADE" })
-    @JoinColumn({ name: "user_id" })
-    user: User;
+  @ManyToOne(() => require("./User").User, (user: User) => user.workoutPlans, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column("text", { nullable: true })
-    description: string;
+  @Column("text", { nullable: true })
+  description: string;
 
-    @OneToMany(() => Workout, (workout) => workout.plan)
-    workouts: Workout[];
-
+  @OneToMany(() => require("./Workout").Workout, (workout: Workout) => workout.workoutPlan)
+  workouts: Workout[];
 }

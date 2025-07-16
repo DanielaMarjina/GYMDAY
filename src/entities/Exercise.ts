@@ -4,7 +4,8 @@ import {
   Column,
   OneToMany,
 } from "typeorm";
-import { WorkoutExercise } from "./WorkoutExercise";
+// import doar tipul, fără import runtime
+import type { WorkoutExercise } from "./WorkoutExercise";
 
 @Entity("exercise")
 export class Exercise {
@@ -17,6 +18,7 @@ export class Exercise {
   @Column({ type: "text", nullable: true })
   description?: string;
 
-  @OneToMany(() => WorkoutExercise, (workoutExercise) => workoutExercise.exercise)
+  // folosește require() pentru a evita ciclu la runtime
+  @OneToMany(() => require("./WorkoutExercise").WorkoutExercise, (workoutExercise: WorkoutExercise) => workoutExercise.exercise)
   usedIn?: WorkoutExercise[];
 }

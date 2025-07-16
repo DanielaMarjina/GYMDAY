@@ -1,32 +1,29 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
   ManyToOne,
+  Column,
+  JoinColumn,  // << aici adaugă JoinColumn
 } from "typeorm";
-import { Workout } from "./Workout";
-import { Exercise } from "./Exercise";
+
+import type { Exercise } from "./Exercise";
+import type { Workout } from "./Workout";
 
 @Entity("workout_exercise")
 export class WorkoutExercise {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "int", default: 3 })
-  sets: number;
+  @ManyToOne(() => require("./Workout").Workout, (workout: Workout) => workout.workoutExercises)
+  workout: Workout;
 
-  @Column({ type: "int", default: 10 })
+  @ManyToOne(() => require("./Exercise").Exercise, (exercise: Exercise) => exercise.usedIn)
+  @JoinColumn({ name: "exercise_id" })
+  exercise: Exercise;
+
+  @Column()
   reps: number;
 
-  @Column({ type: "decimal", precision: 5, scale: 2, nullable: true })
-  weight?: number;
-
-  @Column({ type: "int", default: 1 })
-  order_in_workout: number;
-
-  @ManyToOne(() => Workout, (workout) => workout.workoutExercises, { onDelete: "CASCADE" })
-  workout?: Workout;
-
-  @ManyToOne(() => Exercise, (exercise) => exercise.usedIn, { onDelete: "CASCADE" })
-  exercise?: Exercise;
+  @Column()
+  sets: number;
 }

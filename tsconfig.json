@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "./dist", // aici vor ajunge fișierele compilate JS
+    "rootDir": "./src", // folderul sursă
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
@@ -25,18 +27,21 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "src/*"
       ]
     }
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"],
+    "src/**/*",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next",
+    "dist",
+    "**/*.config.ts"
   ]
 }
