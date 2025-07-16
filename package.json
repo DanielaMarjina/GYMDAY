@@ -12,6 +12,7 @@
     "migration:run": "ts-node --esm ./node_modules/typeorm/cli.js migration:run --dataSource src/data-source.ts"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "mysql2": "^3.14.2",
     "next": "15.3.5",
     "react": "^19.0.0",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.19.7",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
