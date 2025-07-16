@@ -13,9 +13,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, passwordHash } = body;
+    const { name, email, password } = body;
 
-    if (!name || !passwordHash || !email
+    if (!name || !password || !email
     ) {
       return NextResponse.json({ error: "Missing username, email or password" }, { status: 400 });
     }
@@ -23,17 +23,17 @@ export async function POST(req: NextRequest) {
     const dataSource = await initializeDataSource();
     const userRepository = dataSource.getRepository(User);
 
-    // Check if user already exists
-    const existingUser = await userRepository.findOneBy({ name });
+    
+    const existingUser = await userRepository.findOneBy({ email });
     if (existingUser) {
       return NextResponse.json({ error: "User already exists" }, { status: 409 });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(passwordHash, 10);
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save user
-    const newUser = userRepository.create({ name, email ,passwordHash: hashedPassword });
+  
+    const newUser = userRepository.create({ name, email ,password: hashedPassword });
     await userRepository.save(newUser);
 
     return NextResponse.json({ message: "User created successfully", user: { id: newUser.id, name: newUser.name } }, { status: 201 });
