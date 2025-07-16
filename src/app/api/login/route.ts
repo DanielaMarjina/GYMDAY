@@ -7,9 +7,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     
-    const { name, passwordHash } = body;
+    const { name, password } = body;
 
-    if (!name || !passwordHash) {
+    if (!name || !password) {
       return NextResponse.json({ error: "Missing username or password" }, { status: 400 });
     }
 
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid username or password" }, { status: 401 });
     }
 
-    const isPasswordValid = await bcrypt.compare(passwordHash, existingUser.password);
+    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
     if (!isPasswordValid) {
       return NextResponse.json({ error: "Invalid username or password" }, { status: 401 });

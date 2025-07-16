@@ -4,96 +4,68 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-        if (username == "admin" && password == "1234") {
-            router.push("/home");
-        }
-        else {
-            alert("Wrong username/password!");
-        }
+    const data = {
+      name: username,
+      password: password,
     };
 
-    return (
-        <div style={styles.container}>
-            <form onSubmit={handleLogin}
-                style={styles.form}>
-                <h2>Login</h2>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    style={styles.input}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={styles.input}
-                />
-                <button
-                    type="submit"
-                    style={styles.button}
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-                    onMouseEnter={e => e.target.style.backgroundColor = "#005bb5"}
-                    onMouseLeave={e => e.target.style.backgroundColor = "#0070f3"}
-                >Login</button>
-            </form>
-        </div >
-    );
-}
-
-const styles = {
-    container:
-    {
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#5483B3"
-    },
-    form:
-    {
-        backgroundColor: "#7DA0CA",
-        padding: "12px 24px",
-        border: "none",
-        borderRadius: "8px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-        width: 500
-    },
-    input:
-    {
-        padding: "12px 24px",
-        border: "none",
-        borderRadius: "8px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        cursor: "pointer",
-    },
-    button:
-    {
-        backgroundColor: "#0070f3",
-        color: "white",
-        padding: "12px 24px",
-        border: "none",
-        borderRadius: "8px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        cursor: "pointer",
-        boxShadow: "0 4px 12px rgba(0, 112, 243, 0.5)",
-        transition: "background-color 0.3s ease"
+      if (response.ok) {
+        const result = await response.json();
+        router.push("/home");
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || "Login failed");
+      }
+    } catch (err) {
+      alert("An error occurred. Please try again.");
+      console.error(err);
     }
+  };
 
-};
+  return (
+    <div className="h-screen flex justify-center items-center bg-[#5483B3]">
+      <form
+        onSubmit={handleLogin}
+        className="bg-[#7DA0CA] p-6 rounded-lg font-bold text-lg shadow-md flex flex-col gap-2 w-[500px]"
+      >
+        <h2 className="text-2xl mb-4">Login</h2>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="p-3 rounded-lg font-bold text-lg cursor-pointer border-none focus:outline-none"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="p-3 rounded-lg font-bold text-lg cursor-pointer border-none focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="bg-[#0070f3] text-white p-3 rounded-lg font-bold text-lg cursor-pointer shadow-md transition-colors duration-300 hover:bg-[#005bb5]"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+  );
+}
