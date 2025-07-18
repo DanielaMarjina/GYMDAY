@@ -4,23 +4,37 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
+import { WorkoutPlan } from "./WorkoutPlan";
+import { WorkoutExercise } from "./WorkoutExercise";
 
-// importă doar tipurile pentru tipare, nu și implementarea
-import type { WorkoutPlan } from "./WorkoutPlan";
-import type { WorkoutExercise } from "./WorkoutExercise";
-
-@Entity("workout")
+@Entity("workouts")
 export class Workout {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  day: string;
+  @Column({ name: "plan_id" })
+  planId: number;
 
-  @ManyToOne(() => require("./WorkoutPlan").WorkoutPlan, (plan: WorkoutPlan) => plan.workouts)
+  @Column({
+    name: "day_of_week",
+    type: "enum",
+    enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    nullable: true,
+  })
+  dayOfWeek: string | null;
+
+  @Column({ type: "date", nullable: true })
+  date: Date | null;
+
+  @Column({ default: false })
+  completed: boolean;
+
+  @ManyToOne(() => WorkoutPlan, (plan) => plan.workouts)
+  @JoinColumn({ name: "plan_id" })
   workoutPlan: WorkoutPlan;
 
-  @OneToMany(() => require("./WorkoutExercise").WorkoutExercise, (exercise: WorkoutExercise) => exercise.workout)
+  @OneToMany(() => WorkoutExercise, (exercise) => exercise.workout)
   workoutExercises: WorkoutExercise[];
 }

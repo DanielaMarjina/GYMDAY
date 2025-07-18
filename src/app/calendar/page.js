@@ -4,16 +4,16 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import { generateMonthlyProgram } from "../calendar/generateMonthlyProgram";
-import program from "../data/program";
+import programData from "../data/program";
 import Link from "next/link";
 import Image from "next/image";
 import './calendar.css';
 
-
 export default function CalendarPage() {
-
     const [date, setDate] = useState(new Date());
     const [program, setProgram] = useState({});
+    const [selectedType, setSelectedType] = useState("");
+    const [selectedExercises, setSelectedExercises] = useState([]);
 
     useEffect(() => {
         const calendarData = generateMonthlyProgram();
@@ -25,18 +25,25 @@ export default function CalendarPage() {
         return program[iso]?.type;
     };
 
+    const handleDateClick = (date) => {
+        setDate(date);
+        const weekday = date.toLocaleDateString("en-US", { weekday: 'long' }).toLowerCase(); 
+        const workout = programData[weekday];
+        if (workout) {
+            setSelectedType(workout.type_day);
+            setSelectedExercises(workout.exercises);
+        } else {
+            setSelectedType("");
+            setSelectedExercises([]);
+        }
+    };
+
     return (
         <div className="flex h-screen font-sans">
             {/* MENIU */}
             <aside className="w-56 bg-blue-600 text-gray-100 flex flex-col p-5 shadow-md">
                 <div className="flex items-center gap-2 mb-7">
-                    <Image
-                        src="/favicon.ico"
-                        alt="Logo"
-                        width={40}
-                        height={40}
-                        className="rounded-lg"
-                    />
+                    <Image src="/favicon.ico" alt="Logo" width={40} height={40} className="rounded-lg" />
                     <h2 className="text-3xl font-bold text-center m-0">GYMDAY</h2>
                 </div>
                 <nav className="flex flex-col gap-4">
@@ -50,15 +57,13 @@ export default function CalendarPage() {
             </aside>
 
             {/* CONTINUT */}
-
-            <div className="p-6 flex-1 h-full bg-[#f4f4f4] flex justify-center items-start overflow-x-auto">
+            <div className="p-6 flex-1 h-full bg-[#f4f4f4] flex flex-col items-center overflow-x-auto">
                 <div className="calendar-container">
                     <div style={{ minWidth: "800px" }}>
                         <h1 className="text-2xl text-center text-[#2C3E50] font-bold mt-0 mb-4">GYM Calendar</h1>
                         <Calendar
-                            onChange={setDate}
+                            onChange={handleDateClick}
                             value={date}
-
                             tileContent={({ date }) => (
                                 <div className="text-xs text-blue-600 text-center">
                                     {getDayType(date)}
@@ -66,10 +71,25 @@ export default function CalendarPage() {
                             )}
                             className="gym-calendar"
                         />
+
+                       
+                        {selectedType && (
+                            <div className="mt-6 p-4 bg-white shadow-md rounded-lg">
+                                <h2 className="text-xl font-semibold text-[#2C3E50] mb-2">{selectedType}</h2>
+                                <ul className="list-disc list-inside text-gray-700">
+                                    {selectedExercises.length > 0 ? (
+                                        selectedExercises.map((ex, index) => (
+                                            <li key={index}>{ex}</li>
+                                        ))
+                                    ) : (
+                                        <p className="italic text-gray-500">No exercises today.</p>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-
         </div>
-    )
+    );
 }

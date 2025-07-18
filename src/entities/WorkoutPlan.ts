@@ -6,7 +6,7 @@ import {
   JoinColumn,
   OneToMany,
 } from "typeorm";
-import { User } from "./User";  // aici poți lăsa import normal dacă nu e ciclu altundeva
+import { User } from "./User";  
 import type { Workout } from "./Workout";
 
 @Entity("workout_plans")

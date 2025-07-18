@@ -4,10 +4,10 @@ import {
   Column,
   OneToMany,
 } from "typeorm";
-// import doar tipul, fără import runtime
+
 import type { WorkoutExercise } from "./WorkoutExercise";
 
-@Entity("exercise")
+@Entity("exercises")
 export class Exercise {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,7 +18,7 @@ export class Exercise {
   @Column({ type: "text", nullable: true })
   description?: string;
 
-  // folosește require() pentru a evita ciclu la runtime
+
   @OneToMany(() => require("./WorkoutExercise").WorkoutExercise, (workoutExercise: WorkoutExercise) => workoutExercise.exercise)
   usedIn?: WorkoutExercise[];
 }
