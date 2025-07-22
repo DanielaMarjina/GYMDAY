@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import "mysql2";
+import * as path from "path"; 
 import { User } from "./entities/User";
 import { WorkoutPlan } from "./entities/WorkoutPlan";
 import { Workout } from "./entities/Workout";
@@ -13,10 +14,10 @@ export const AppDataSource = new DataSource({
   username: "root",
   password: "admin1234",
   database: "gymday",
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [User, WorkoutPlan, Workout, Exercise, WorkoutExercise],
-  migrations: ["src/migrations/*.ts"],
+  migrations: [path.join(__dirname, "migrations/*.ts")],  
 });
 
 export async function initializeDataSource() {

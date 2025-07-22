@@ -17,6 +17,10 @@ export class Workout {
   @Column({ name: "plan_id" })
   planId: number;
 
+  @Column({ type: "varchar", length: 255, nullable: false })
+  muscles_trained: string;
+
+
   @Column({
     name: "day_of_week",
     type: "enum",

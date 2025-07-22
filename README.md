@@ -40,7 +40,7 @@ Create migrations
 
 typeorm migration:create .\src\migration-name
 
-typeorm migration:create .\src\migrations\WorkoutPlan
+typeorm migration:create .\src\migrations\UpdateWorkout
 
 create .\src\migration-name
 

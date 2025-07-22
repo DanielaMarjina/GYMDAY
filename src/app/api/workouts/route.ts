@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await request.json();
-    const { plan_id, day_of_week, date, completed} = data;
+    const { plan_id, muscles_trained, day_of_week, date, completed} = data;
 
     if (!plan_id) {
       return NextResponse.json({ error: "plan_id is required" }, { status: 400 });
@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
 
     const workout = new Workout();
     workout.planId = plan_id;
+    workout.muscles_trained = data.muscles_trained;
     workout.dayOfWeek = day_of_week || "";
     workout.date = date ? new Date(date) : null;
     workout.completed = completed ?? false;
