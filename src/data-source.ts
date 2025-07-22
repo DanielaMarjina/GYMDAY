@@ -10,13 +10,13 @@ export const AppDataSource = new DataSource({
   type: "mysql",
   host: "localhost",
   port: 3306,
-  username: "practica",
+  username: "root",
   password: "admin1234",
   database: "gymday",
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: [User, WorkoutPlan, Workout, Exercise, WorkoutExercise],
-  migrations: ["src/migrations/*.js"],
+  migrations: ["src/migrations/*.ts"],
 });
 
 export async function initializeDataSource() {
