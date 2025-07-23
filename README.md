@@ -106,7 +106,7 @@ Run All migrations
 
 | Clasă      | Ce face                                      |
 | ---------- | -------------------------------------------- |
-| `w-56`     | Lățime fixă de `14rem` (meniul lateral)      |
+| `w-56`     | Lățime fixă de `14rem`                       |
 | `w-full`   | Ocupă toată lățimea părintelui               |
 | `max-w-xl` | Lățime maximă de `36rem`                     |
 | `h-screen` | Înălțimea completă a ecranului               |

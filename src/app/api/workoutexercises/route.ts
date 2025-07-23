@@ -5,19 +5,6 @@ import { Workout } from "../../../entities/Workout";
 import { Exercise } from "../../../entities/Exercise";
 
 
-export async function GET() {
-  try {
-    const db = await initializeDataSource();
-    const repo = db.getRepository(WorkoutExercise);
-    const all = await repo.find({ relations: ["workout", "exercise"] });
-    return NextResponse.json(all);
-  } catch (error) {
-    console.error("GET WorkoutExercise error:", error);
-    return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
-  }
-}
-
-
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();

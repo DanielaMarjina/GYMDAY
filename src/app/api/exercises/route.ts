@@ -2,6 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { initializeDataSource } from "../../../data-source";
 import { Exercise } from "../../../entities/Exercise";
 
+export async function GET(request: NextRequest) {
+  try {
+    const dataSource = await initializeDataSource();
+
+    if (!dataSource.isInitialized) {
+      await dataSource.initialize();
+    }
+
+    const exercises = await dataSource.manager.find(Exercise);
+
+    return NextResponse.json(exercises);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const dataSource = await initializeDataSource();
@@ -11,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await request.json();
-    const { name, description} = data;
+    const { name, description } = data;
 
     if (!name) {
       return NextResponse.json({ error: "name is required" }, { status: 400 });
