@@ -56,7 +56,7 @@ export default function HomePage() {
             const data = await res.json();
 
             if (res.ok) {
-                setExercises(data.exercises || []); // <<< AICI e cheia
+                setExercises(data.exercises || []); 
             } else {
                 console.warn("No workout for today or error:", data.message || data.error);
                 setExercises([]);
@@ -111,7 +111,7 @@ export default function HomePage() {
         const confirmed = confirm("Are you sure you want to delete this exercise?");
         if (!confirmed) return;
 
-        const res = await fetch(`/api/workoutexercises?id=${id}`, {  // <-- aici era /api/exercises, dar trebuie workoutexercises
+        const res = await fetch(`/api/workoutexercises?id=${id}`, {  
             method: "DELETE",
         });
 

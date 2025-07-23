@@ -24,7 +24,7 @@ export class Workout {
   @Column({
     name: "day_of_week",
     type: "enum",
-    enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    enum: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
     nullable: true,
   })
   dayOfWeek: string | null;
