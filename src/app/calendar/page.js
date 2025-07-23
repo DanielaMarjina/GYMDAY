@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import { generateMonthlyProgram } from "../calendar/generateMonthlyProgram";
-import programData from "../data/program";
 import Link from "next/link";
 import Image from "next/image";
 import './calendar.css';
@@ -25,18 +24,31 @@ export default function CalendarPage() {
         return program[iso]?.type;
     };
 
-    const handleDateClick = (date) => {
+    const handleDateClick = async (date) => {
         setDate(date);
-        const weekday = date.toLocaleDateString("en-US", { weekday: 'long' }).toLowerCase(); 
-        const workout = programData[weekday];
-        if (workout) {
-            setSelectedType(workout.type_day);
-            setSelectedExercises(workout.exercises);
-        } else {
-            setSelectedType("");
+
+        const weekday = date.toLocaleDateString("en-US", { weekday: 'long' }).toLowerCase();
+
+        try {
+            const res = await fetch(`/api/workoutexercises/byday?day=${weekday}`);
+            const data = await res.json();
+
+            console.log("DATA FROM API:", data);
+
+            if (res.ok) {
+                setSelectedType(data.muscles_trained);
+                setSelectedExercises(data.exercises);
+            } else {
+                setSelectedType("REST DAY");
+                setSelectedExercises([]);
+            }
+        } catch (err) {
+            console.error("Error fetching exercises:", err);
+            setSelectedType("REST DAY");
             setSelectedExercises([]);
         }
     };
+
 
     return (
         <div className="flex h-screen font-sans">
@@ -72,14 +84,16 @@ export default function CalendarPage() {
                             className="gym-calendar"
                         />
 
-                       
+
                         {selectedType && (
                             <div className="mt-6 p-4 bg-white shadow-md rounded-lg">
                                 <h2 className="text-xl font-semibold text-[#2C3E50] mb-2">{selectedType}</h2>
                                 <ul className="list-disc list-inside text-gray-700">
                                     {selectedExercises.length > 0 ? (
                                         selectedExercises.map((ex, index) => (
-                                            <li key={index}>{ex}</li>
+                                            <li key={index}>
+                                                <strong>{ex.name}</strong> — {ex.weight} kg [{ex.sets} sets x {ex.reps} reps]
+                                            </li>
                                         ))
                                     ) : (
                                         <p className="italic text-gray-500">No exercises today.</p>

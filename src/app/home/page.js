@@ -315,7 +315,7 @@ export default function HomePage() {
                 <div className="flex justify-center gap-4 mb-6">
                     <button
                         onClick={saveExercises}
-                        className="cursor-pointer w-32 mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition"
+                        className="cursor-pointer w-40 mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition"
                     >
                         Save changes
                     </button>
