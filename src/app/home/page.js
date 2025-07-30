@@ -213,7 +213,7 @@ export default function HomePage() {
                             {exercises.map((ex, idx) => (
                                 <li key={idx} className="mb-2">
                                     <div className="flex items-center gap-4">
-                                        <strong className="w-32">{ex.exercise.name}</strong>
+                                        <strong className="w-36">{ex.exercise.name}</strong>
                                         <div className="flex items-center w-24">
                                             <input
                                                 type="number"
