@@ -20,10 +20,10 @@ It helps users organize their workout routines, track progress, and manage exerc
 ![Login](public/screenshots/login.png)
 
 ### Home – Daily Program  
-![Home](/screenshots/home.png)  
+![Home](public/screenshots/home.png)  
 
 ### Calendar  
-![Calendar](/screenshots/calendar.png)
+![Calendar](public/screenshots/calendar.png)
 
 ---
 
