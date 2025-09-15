@@ -28,10 +28,10 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const dataSource = await initializeDataSource();
+    const db = await initializeDataSource();
 
-    if (!dataSource.isInitialized) {
-      await dataSource.initialize();
+    if (!db.isInitialized) {
+      await db.initialize();
     }
 
     const data = await request.json();
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     workout.date = date ? new Date(date) : null;
     workout.completed = completed ?? false;
 
-    const savedWorkout = await dataSource.manager.save(workout);
+    const savedWorkout = await db.manager.save(workout);
 
     return NextResponse.json(savedWorkout, { status: 201 });
   } catch (error) {
