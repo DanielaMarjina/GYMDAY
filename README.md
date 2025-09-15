@@ -17,7 +17,7 @@ It helps users organize their workout routines, track progress, and manage exerc
 ## 🖼️ Preview
 
 ### Login  
-![Login](/screenshots/login.png)
+![Login](public/screenshots/login.png)
 
 ### Home – Daily Program  
 ![Home](/screenshots/home.png)  
