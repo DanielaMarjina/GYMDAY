@@ -22,7 +22,7 @@ It helps users organize their workout routines, track progress, and manage exerc
 ![Home](./screenshots/home.png)  
 
 ### Calendar  
-![Calendar](./screenshots/calendar.png)  
+![Calendar](./screenshots/calendar.pn)  
 
 ---
 
