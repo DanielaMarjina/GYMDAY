@@ -1,20 +1,20 @@
-# 🏋️‍♀️ GYMDAY
+# GYMDAY
 
 **GYMDAY** is a fitness web app built with **React, Next.js, and TypeScript**.  
 It helps users organize their workout routines, track progress, and manage exercises with ease.  
 
 ---
 
-## ✨ Features
-- 🔑 User authentication for personalized access  
-- 🏠 Home page displaying the workout program of the current day  
-- ➕ Add, edit, or remove exercises (sets, reps, weights)  
-- 📅 Interactive calendar to view all workouts organized by day  
-- 📊 Track progress over time  
+## Features
+- User authentication for personalized access  
+- Home page displaying the workout program of the current day  
+- Add, edit, or remove exercises (sets, reps, weights)  
+- Interactive calendar to view all workouts organized by day  
+- Track progress over time  
 
 ---
 
-## 🖼️ Preview
+## Preview
 
 ### Login  
 ![Login](public/screenshots/login.png)
@@ -27,7 +27,7 @@ It helps users organize their workout routines, track progress, and manage exerc
 
 ---
 
-## ⚙️ Technologies
+## Technologies
 - **React, Next.js, TypeScript**  
 - **MySQL + TypeORM** for data management  
 - **Postman** for API testing  
